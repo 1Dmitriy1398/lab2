@@ -1,0 +1,86 @@
+#include <iostream>
+using namespace std;
+
+void prog(int* Arr3, int n);
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int** Arr;// выстрелы
+	int* Arr2;// сумма попаданий стрелка
+	int* Arr3;// номера победителей
+	int n, m, num, ii = 0, max = 0;// ii-ячейка массива для победителя, max - максимальная сумма попаданий
+	cout << "Введите n "; cin >> n;
+	cout << "Введите m "; cin >> m;
+	cout << endl;
+	Arr2 = new int[n];
+	Arr3 = new int[n];
+	Arr = new int* [n];// динамический массив
+	for (int i = 0; i < n; i++)
+	{
+		Arr[i] = new int[m];
+		for (int j = 0; j < m; j++)
+		{
+			num = rand() % (10 - 0 + 1) + 0;
+			Arr[i][j] = num;
+		}
+	}
+
+	for (int i = 0; i < n; i++)// Заполнение нулями
+	{
+	Arr3[i] = 0;
+	Arr2[i] = 0;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		cout << "стрелок " << i + 1;
+
+		for (int j = 0; j < m; j++)//вывод выстрелов
+		{
+			printf("%5d", Arr[i][j]);
+		}
+		cout << endl;
+	}
+
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			Arr2[i] += Arr[i][j];//подсчет количества попаданий у стрелка
+		}
+		if (max == Arr2[i]) 
+		{ 
+			ii++; Arr3[ii] = i + 1;// номера стрелков победителелей ( плюс к уже имеющимся )
+		}
+		else if (max < Arr2[i]) 
+		{ 
+			ii = 0; prog(Arr3, n); Arr3[ii] = i + 1; max = Arr2[i]; 
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Сумма выстрелов " << i + 1 << endl << Arr2[i] << endl;
+	}
+	if (ii == 0) 
+	{ 
+		cout << "Выйграл:" << endl; 
+	}
+	else 
+	{ 
+		cout << "Выйграли:" << endl; 
+	}
+	for (int i = 0; i <= ii; i++)
+	{
+		cout << "стрелок " << Arr3[i] << endl;
+	}
+
+}
+
+void prog(int* Arr3, int n)// обнуляет места победителей
+{
+	for (int i = 0; i < n; i++)
+	{
+		Arr3[i] = 0;
+	}
+}

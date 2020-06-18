@@ -1,0 +1,572 @@
+ПЕРВОЕ 111111111111
+#include <iostream>
+using namespace std;
+void zam(int** Arr, int n);
+void zamm(int** Arr, int n);
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int** Arr;
+	int num, a, b, n, j = 0, z, x, i1 = -1, j1 = -1, i2 = -1, j2 = -1, ai, aj;// ai,aj-границы слева и справа
+	cout << "Введите a "; cin >> a;
+	cout << "Введите b>=a "; cin >> b;
+	cout << "Введите n "; cin >> n;
+	cout << endl;
+	Arr = new int* [n];// динамический массив
+	for (int i = 0; i < n; i++)
+	{
+		Arr[i] = new int[n];
+		for (int j = 0; j < n; j++)
+		{
+			num = rand() % (b - a + 1) + a;
+			Arr[i][j] = num;
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+
+		for (int j = 0; j < n; j++)// вывод массива
+		{
+			printf("%5d", Arr[i][j]);
+		}
+		cout << endl;
+	}	cout << "----------------------------------------------------------" << endl;
+	zamm(Arr, n);//поворачивает массив налево
+	z = 1; x = -1;
+	ai = 0; aj = n - 1; j = 0;
+	while (ai <= aj)//поиск максимального отрицательного числа
+	{
+		for (int i = ai; i <= aj; i++)
+		{
+			if (z != 1) { if (Arr[i][j] > z && Arr[i][j] < 0) { z = Arr[i][j]; i1 = i; j1 = j; } }
+			else { if (Arr[i][j] < 0) { z = Arr[i][j]; i1 = i; j1 = j; } }
+		}
+		ai++; aj--; j++;
+	}
+	ai = 0; aj = n - 1; j = n - 1;
+	while (ai <= aj)// поиск минимального положительного числа
+	{
+		for (int i = ai; i <= aj; i++)
+		{
+			if (x != -1) { if (Arr[i][j] < x && Arr[i][j] > 0) { x = Arr[i][j]; i2 = i; j2 = j; } }
+			else { if (Arr[i][j] > 0) { x = Arr[i][j]; i2 = i; j2 = j; } }
+		}
+		ai++; aj--; j--;
+	}
+	if (i1 > -1 && i2 > -1 && j1 > -1 && j2 > -1) // Замена чисел
+	{
+		Arr[i1][j1] = x; Arr[i2][j2] = z;
+	}
+	else { cout << "нет таких чисел" << endl; }
+	zam(Arr, n);// поворот обратно
+	cout << endl << "----------------------------------------------------------" << endl;
+	for (int i = 0; i < n; i++)// вывод массива
+	{
+
+		for (int j = 0; j < n; j++)
+		{
+			printf("%5d", Arr[i][j]);
+		}
+
+		cout << endl;
+	}
+
+	return 0;
+}
+void zam(int** Arr, int n)//поворот обратно
+{
+	int** Arr2; int ii, jj=0;
+	Arr2 = new int* [n];
+	for (int i = 0; i < n; i++)
+	{
+		ii = n - 1; 
+		Arr2[i] = new int[n];
+		for (int j = 0; j < n; j++)
+		{
+			Arr2[i][j] = Arr[ii][jj];
+			ii--;
+		
+		}
+		jj++;
+	}
+	
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			Arr[i][j] = Arr2[i][j];
+		}
+	}
+}
+void zamm(int** Arr, int n)// поворот налево
+{
+	int** Arr3;int ii = 0, jj = n - 1;
+	Arr3 = new int* [n];
+	for (int i = 0; i < n; i++)
+	{
+	    ii = 0;
+		Arr3[i] = new int[n];
+		for (int j = 0; j < n; j++)
+		{
+			Arr3[i][j] = Arr[ii][jj];
+			ii++;
+
+		}
+		jj--;
+	}
+	
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			Arr[i][j] = Arr3[i][j];
+		}
+	}
+}
+ВТОРОЕ 22222222222
+#include <math.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdio.h>
+#include <fstream>
+using namespace std;
+void str1(int** Arr1, int i1, int i3, int* ms3);// умножение A на B
+void str2(int** Arr2, int i2, int i4, int* ms4);// умножение C на D
+void st(int** Arr1, int i1, int j1, int T);// возведение в степень T
+void mn(int** Arr2, int i2, int j2);// умножение 10
+void min(int* ms3, int* ms4, int i3);// str1-str2
+int main()
+{
+	setlocale(LC_ALL, "Russian"); bool prov = false;
+	int* ms4; int* ms3; int** Arr1; int** Arr2;
+	char buff[50]; float T;
+	int n1, i = 0, j = 0, i1 = 0, j1 = 0, i2 = 0, j2 = 0, i3 = -1, i4 = -1;  ofstream fout; ifstream vod;
+	vod.open("1.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod.getline(buff, 50); i1++;
+
+	}
+	vod.close();
+	vod.open("1.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod >> n1;
+		j1++;
+	}
+	j1 = j1 / i1;
+	vod.close();
+	vod.open("1.txt");
+	Arr1 = new int* [i1];// динамический массив
+	for (int i = 0; i < i1; i++)
+	{
+		Arr1[i] = new int[j1];
+		for (int j = 0; j < j1; j++)
+		{
+			vod >> n1;
+			Arr1[i][j] = n1;
+		}
+	}
+	vod.close();
+
+	for (int i = 0; i < i1; i++)
+	{
+
+		for (int j = 0; j < j1; j++)
+		{
+			printf("%5d", Arr1[i][j]);
+		}
+		cout << endl;
+	}
+	cout << "----------------------------------------" << endl;
+	vod.open("2.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod.getline(buff, 50); i2++;
+
+	}
+
+	vod.close();
+	vod.open("2.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod >> n1;
+		j2++;
+	}
+	j2 = j2 / i2;
+	vod.close();
+	vod.open("2.txt");
+	Arr2 = new int* [i2];// динамический массив
+	for (int i = 0; i < i2; i++)
+	{
+		Arr2[i] = new int[j2];
+		for (int j = 0; j < j2; j++)
+		{
+			vod >> n1;
+			Arr2[i][j] = n1;
+		}
+	}
+	vod.close();
+
+	for (int i = 0; i < i2; i++)
+	{
+
+		for (int j = 0; j < j2; j++)
+		{
+			printf("%5d", Arr2[i][j]);
+		}
+		cout << endl;
+	}
+	cout << "----------------------------------------" << endl;
+
+	vod.open("3.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod >> n1;
+		i3++;
+	}
+
+	vod.close();
+	ms3 = new int[i3];
+
+	vod.open("3.txt");
+	for (int i = 0; i < i3; i++)
+	{
+		vod >> n1;
+		ms3[i] = n1;
+	}
+	vod.close();
+
+	for (int i = 0; i < i3; i++)
+	{
+		cout << ms3[i] << endl;
+	}
+	cout << endl << "----------------------------------------" << endl;
+
+	vod.open("4.txt");//кол чет чисел.
+	while (!vod.eof())
+	{
+		vod >> n1;
+		i4++;
+	}
+
+	vod.close();
+	ms4 = new int[i4];
+
+	vod.open("4.txt");
+	for (int i = 0; i < i4; i++)
+	{
+		vod >> n1;
+		ms4[i] = n1;
+	}
+	vod.close();
+
+	for (int i = 0; i < i4; i++)
+	{
+		cout << ms4[i] << endl;
+	}
+	cout << endl << "----------------------------------------" << endl;
+	cout << "T = "; cin >> T;
+	mn(Arr2, i2, j2);
+	st(Arr1, i1, j1, T);
+	str1(Arr1, i1, i3, ms3);
+	str2(Arr2, i2, i4, ms4);
+	min(ms3, ms4, i3);
+
+	cout << endl << "----------------------------------------" << endl;
+	for (int i = 0; i < i3; i++)
+	{
+		printf("%5d", ms3[i]);
+		cout << endl;
+	}
+
+
+}
+
+void min(int* ms3, int* ms4, int i3) {
+
+	for (int i = 0; i < i3; i++)
+	{
+		ms3[i] = ms3[i] - ms4[i];
+	}
+
+}
+void str1(int** Arr1, int i1, int i3, int* ms3)
+{
+	int* c; // Результат
+	int* a;
+	a = new int[i3];
+	for (int i = 0; i < i3; i++)
+	{
+
+
+		a[i] = ms3[i];
+	}
+
+	c = new int[i3];
+	for (int i = 0; i < i3; i++)
+
+	{
+
+		c[i] = 0;
+	}
+	for (int i = 0; i < i3; i++) 
+	{
+
+		for (int k = 0; k < i3; k++) 
+		{
+			c[i] += Arr1[i][k] * a[k];
+		}
+
+	}
+	for (int i = 0; i < i3; i++)
+	{
+
+
+		ms3[i] = c[i];
+
+	}
+
+}
+
+
+
+void str2(int** Arr2, int i2, int i4, int* ms4)
+{
+	int* c; // Результат
+	int* a;
+	a = new int[i4];
+	for (int i = 0; i < i4; i++)
+	{
+
+
+		a[i] = ms4[i];
+	}
+	c = new int[i4];
+	for (int i = 0; i < i4; i++)
+
+	{
+		c[i] = 0;
+	}
+	for (int i = 0; i < i4; i++) {
+
+		for (int k = 0; k < i4; k++) {
+			c[i] += Arr2[i][k] * a[k];
+		}
+
+	}
+	for (int i = 0; i < i4; i++)
+	{
+
+
+		ms4[i] = c[i];
+
+	}
+}
+
+void st(int** Arr1, int i1, int j1, int T)
+{
+	int** c; // Результат
+	int** a;
+	a = new int* [i1];
+	for (int i = 0; i < i1; i++)
+	{
+		a[i] = new int[j1];
+		for (int j = 0; j < j1; j++)
+		{
+
+			a[i][j] = Arr1[i][j];// сохранение оригинального массива для последующего умножения
+		}
+	}
+
+	while (T > 1)
+	{
+
+		c = new int* [i1];
+		for (int i = 0; i < i1; i++)
+		{
+			c[i] = new int[j1];
+			for (int j = 0; j < j1; j++)
+			{
+
+				c[i][j] = 0;
+			}
+		}
+		for (int i = 0; i < i1; i++) 
+		{
+			for (int j = 0; j < j1; j++) 
+			{
+				for (int k = 0; k < i1; k++)
+				{
+					c[i][j] += Arr1[i][k] * a[k][j];//возведение в степень
+				}
+			}
+
+		}
+		for (int i = 0; i < i1; i++)
+		{
+			for (int j = 0; j < j1; j++)
+			{
+
+				Arr1[i][j] = c[i][j];
+			}
+		}
+		T--;
+	}
+
+}
+
+
+void mn(int** Arr2, int i2, int j2)
+{
+	for (int i = 0; i < i2; i++)
+	{
+		for (int j = 0; j < j2; j++)
+		{
+			Arr2[i][j] = Arr2[i][j] * 10;
+		}
+	}
+}
+СТРЕЛЬБА
+#include <iostream>
+using namespace std;
+
+void prog(int* Arr3, int n);
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int** Arr;// выстрелы
+	int* Arr2;// сумма попаданий стрелка
+	int* Arr3;// номера победителей
+	int n, m, num, ii = 0, max = 0;// ii-ячейка массива для победителя, max - максимальная сумма попаданий
+	cout << "Введите n "; cin >> n;
+	cout << "Введите m "; cin >> m;
+	cout << endl;
+	Arr2 = new int[n];
+	Arr3 = new int[n];
+	Arr = new int* [n];// динамический массив
+	for (int i = 0; i < n; i++)
+	{
+		Arr[i] = new int[m];
+		for (int j = 0; j < m; j++)
+		{
+			num = rand() % (10 - 0 + 1) + 0;
+			Arr[i][j] = num;
+		}
+	}
+
+	for (int i = 0; i < n; i++)// Заполнение нулями
+	{
+	Arr3[i] = 0;
+	Arr2[i] = 0;
+	}
+	for (int i = 0; i < n; i++)
+	{
+		cout << "стрелок " << i + 1;
+
+		for (int j = 0; j < m; j++)//вывод выстрелов
+		{
+			printf("%5d", Arr[i][j]);
+		}
+		cout << endl;
+	}
+
+
+	for (int i = 0; i < n; i++)
+	{
+		for (int j = 0; j < m; j++)
+		{
+			Arr2[i] += Arr[i][j];//подсчет количества попаданий у стрелка
+		}
+		if (max == Arr2[i]) 
+		{ 
+			ii++; Arr3[ii] = i + 1;// номера стрелков победителелей ( плюс к уже имеющимся )
+		}
+		else if (max < Arr2[i]) 
+		{ 
+			ii = 0; prog(Arr3, n); Arr3[ii] = i + 1; max = Arr2[i]; 
+		}
+	}
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Сумма выстрелов " << i + 1 << endl << Arr2[i] << endl;
+	}
+	if (ii == 0) 
+	{ 
+		cout << "Выйграл:" << endl; 
+	}
+	else 
+	{ 
+		cout << "Выйграли:" << endl; 
+	}
+	for (int i = 0; i <= ii; i++)
+	{
+		cout << "стрелок " << Arr3[i] << endl;
+	}
+
+}
+
+void prog(int* Arr3, int n)// обнуляет места победителей
+{
+	for (int i = 0; i < n; i++)
+	{
+		Arr3[i] = 0;
+	}
+}
+hard4
+
+#include <iostream>
+#include <string.h>
+using namespace std;
+void vds(char** gg);
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	char z[2] = " ", ll[2] = "o", zz[2] = "x"; char** g;
+	int i, j; bool t1 = true, t2 = true;
+	g = new char* [3];// динамический массив
+	for (int i = 0; i < 3; i++)
+	{
+		g[i] = new char[3];
+		for (int j = 0; j < 3; j++)
+		{
+			g[i][j] = z[0];// заполнение массива пробелами
+		}
+	}
+	vds(g);
+	while (t1)// проверка на остаток элементов массива
+	{
+		t1 = false;
+		while (t2) // проверка на свободную клетку 
+		{
+			cout << "Сделай ход в свободную ячейку (строка и столбец) ";
+			cout << "строка (0-2) "; cin >> i; cout << "столбец (0-2) "; cin >> j;
+			if (g[i][j] == z[0]) { g[i][j] = zz[0]; t2 = false; }
+		}
+		t2 = true; 
+		for (int i = 0; i < 3; i++)
+		{
+			for (int j = 0; j < 3; j++)
+			{
+				if (g[i][j] == z[0]) // проверка на свободную клетку(бот)
+				{ 
+					g[i][j] = ll[0]; t1 = true; i = 10; j = 10;
+				}
+			}
+		}
+
+		vds(g);
+	}
+	return 0;
+}
+void vds(char** gg) // вывод массива
+{
+
+	cout << endl << gg[0][0] << "|" << gg[0][1] << "|" << gg[0][2] << endl;
+	cout << "- - -" << endl;
+	cout << gg[1][0] << "|" << gg[1][1] << "|" << gg[1][2] << endl;
+	cout << "- - -" << endl;
+	cout << gg[2][0] << "|" << gg[2][1] << "|" << gg[2][2] << endl;
+}
